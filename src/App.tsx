@@ -3,7 +3,11 @@ import React, { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import './styles/App.scss';
 import Sidebar from './components/sidebar';
-import { getWeatherByCoordinates, WeatherData, getWeatherByCity } from './services/weatherService';
+import {
+  getWeatherByCoordinates,
+  WeatherData,
+  getWeatherByCity,
+} from './services/weatherService';
 import axios from 'axios';
 import SearchBar from './components/searchBar';
 import DarkModeToggle from './components/darkModeToggle';
@@ -14,10 +18,10 @@ import {
   Marker,
   Popup,
   useMapEvents,
+  useMap,
 } from 'react-leaflet';
 import L from 'leaflet';
 
-// Fix for default marker icons in React Leaflet
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
@@ -25,19 +29,21 @@ const DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
   iconSize: [25, 41],
-  iconAnchor: [12, 41]
+  iconAnchor: [12, 41],
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const App:React.FC = () => {
+const App: React.FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<
     [number, number] | null
   >(null);
-  const [mapCenter, setMapCenter] = useState<[number, number]>([-33.9221, 18.4231]); 
+  const [mapCenter, setMapCenter] = useState<[number, number]>([
+    -33.9221, 18.4231,
+  ]);
   const [mapZoom, setMapZoom] = useState<number>(5);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -73,7 +79,7 @@ const App:React.FC = () => {
     }
   };
 
-  const handleCitySearch = async (city:string) => {
+  const handleCitySearch = async (city: string) => {
     setLoading(true);
     setError(null);
 
@@ -108,9 +114,22 @@ const App:React.FC = () => {
     });
     return null;
   };
+
+  const UpdateMapView = () => {
+    const map = useMap();
+
+    useEffect(() => {
+      if (mapCenter && mapZoom) {
+        map.setView(L.latLng(mapCenter[0], mapCenter[1]), mapZoom);
+      }
+    }, [map]);
+
+    return null;
+  };
+
   return (
     <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
-    <div className="header">
+      <div className="header">
         <h1>Weather Map</h1>
         <div className="header-controls">
           <SearchBar onSearch={handleCitySearch} />
@@ -118,38 +137,39 @@ const App:React.FC = () => {
         </div>
       </div>
       <div className="content-container">
-      <MapContainer
-        className="map-container"
-        center={mapCenter}
-        zoom={mapZoom}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url={
-            darkMode
-              ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-              : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-          }
-        />
-        <MapClickHandler />
-        {selectedLocation && (
-          <Marker position={selectedLocation}>
-            <Popup>
-                {weatherData?.name}<br /> Easily customizable.
-            </Popup>
-          </Marker>
-        )}
-      </MapContainer>
+        <MapContainer
+          className="map-container"
+          center={mapCenter}
+          zoom={mapZoom}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url={
+              darkMode
+                ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+                : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            }
+          />
+          <UpdateMapView />
+          <MapClickHandler />
+          {selectedLocation && (
+            <Marker position={selectedLocation}>
+              <Popup>
+                {weatherData?.name}
+                <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          )}
+        </MapContainer>
 
-      <Sidebar
+        <Sidebar
           weatherData={weatherData}
           loading={loading}
           error={error}
           darkMode={darkMode}
         />
       </div>
-
-     </div>
+    </div>
   );
 };
 

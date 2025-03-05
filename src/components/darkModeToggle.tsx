@@ -5,7 +5,10 @@ interface DarkModeToggleProps {
   setDarkMode: (value: boolean) => void;
 }
 
-const DarkModeToggle: React.FC<DarkModeToggleProps> = ({ darkMode, setDarkMode }) => {
+const DarkModeToggle: React.FC<DarkModeToggleProps> = ({
+  darkMode,
+  setDarkMode,
+}) => {
   return (
     <div className="dark-mode-toggle">
       <input
