@@ -1,0 +1,16 @@
+@import 'variables';
+@import 'mixins';
+
+.search-bar {
+  @include flex(row);
+  gap: $spacing-sm;
+
+  input {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+}

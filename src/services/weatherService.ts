@@ -29,7 +29,12 @@ export interface WeatherError {
     sys: {
         country: string;
     };
+    coord: {
+      lat: number;
+      lon: number;
+    },
     message?: string;
+    
 };
 
 
@@ -51,3 +56,22 @@ export const getWeatherByCoordinates = async (lat: number, lon: number): Promise
     
         return response.data; 
     };
+
+    export const getWeatherByCity = async (city: string): Promise<WeatherData | null> => {
+      if (!API_KEY) {
+        throw new Error(
+          'API key is not configured. Please set VITE_OPENWEATHERMAP_API_KEY in your environment variables.',
+        );
+      }
+    
+      const response = await axios.get(`${BASE_URL}/weather`, {
+        params: {
+          q: city,
+          appid: API_KEY,
+          units: 'metric',
+        },
+      });
+    
+      return response.data;
+    };
+    
