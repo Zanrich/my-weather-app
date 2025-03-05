@@ -1,54 +1,94 @@
-# React + TypeScript + Vite
+# My Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+My Weather App is a simple weather application built with React, React Leaflet, and OpenWeather API. It allows users to view weather information by interacting with a map or searching for cities.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Project Setup](#project-setup)
+- [Available Scripts](#available-scripts)
+- [Libraries and Tools Used](#libraries-and-tools-used)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Expanding the ESLint configuration
+## Project Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+To get started with the project, you'll need to have Node.js and npm installed. You can then follow these steps:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourusername/my-weather-app.git
+   cd my-weather-app```
+
+2. **Install dependencies:**
+
+Navigate to the project directory and run:
+```bash
+  npm install
+```
+3. **Run the development server:**
+
+Start the Vite development server using:
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Available Scripts
+In the project directory, you can run:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Development Server:**
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm run dev
 ```
+
+This runs the app in development mode using Vite.
+
+**Build Production Bundle:**
+
+```bash
+npm run build
+```
+This compiles the application and creates a production-ready build.
+
+**Preview Production Build:**
+
+```bash
+npm run preview
+```
+This previews the production build locally.
+
+**Linting:**
+
+```bash
+npm run lint
+```
+Runs ESLint to check for code quality.
+
+**Code Formatting:**
+
+```bash
+npm run format
+```
+Formats the source code using Prettier.
+
+## Libraries and Tools Used
+- React: A JavaScript library for building user interfaces.
+- Leaflet: An open-source JavaScript library for mobile-friendly interactive maps.
+- React Leaflet: React components for Leaflet maps.
+- OpenWeather API: An API to get weather-related data.
+- Axios: Used for making HTTP requests.
+- Vite: A fast build tool and development server.
+- TypeScript: A strongly typed programming language that builds on JavaScript.
+- SASS: A preprocessor scripting language that is interpreted or compiled into CSS.
+
+## Contributing
+Contributions are welcome! Please follow these steps if you plan to contribute:
+
+1. Fork the repository.
+2. Create a new branch with your feature or bugfix.
+3. Commit your changes and push the branch.
+4. Submit a pull request.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
