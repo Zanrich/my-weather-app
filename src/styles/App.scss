@@ -1,5 +1,57 @@
-.map-container {
-    flex: 1;
-    height: 100%;
-    z-index: 1;
+@import 'variables';
+@import 'mixins';
+
+.app-container {
+  @include flex(column);
+  height: 100vh;
+  @include transition(background-color, color);
+}
+
+.header {
+  @include flex(row, space-between, center);
+  padding: $spacing-md $spacing-xl;
+  background-color: var(--card-background);
+  @include box-shadow(1);
+  z-index: 1000;
+
+  h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
   }
+
+  .header-controls {
+    @include flex(row, flex-start, center);
+    gap: $spacing-md;
+  }
+
+  @include mobile {
+    @include flex(column, center, center);
+    gap: $spacing-md;
+    padding: $spacing-md;
+
+    .header-controls {
+      width: 100%;
+      @include flex(column, center, center);
+    }
+  }
+}
+
+.content-container {
+  @include flex(row);
+  flex: 1;
+  overflow: hidden;
+
+  @include mobile {
+    @include flex(column);
+  }
+}
+
+.map-container {
+  flex: 1;
+  height: 100%;
+  z-index: 1;
+
+  @include mobile {
+    height: 60vh;
+  }
+}

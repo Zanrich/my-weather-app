@@ -1,0 +1,60 @@
+@mixin flex(
+  $direction: row,
+  $justify: flex-start,
+  $align: stretch,
+  $wrap: nowrap
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+@mixin mobile {
+  @media (max-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $breakpoint-md) and (max-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin transition($properties...) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append(
+      $transitions,
+      $property var(--transition-speed),
+      comma
+    );
+  }
+  transition: $transitions;
+}
+
+@mixin card {
+    background-color: var(--card-background);
+    border-radius: $border-radius-md;
+    @include box-shadow(1);
+    padding: $spacing-md;
+  }
+
+  @mixin box-shadow($level: 1) {
+    @if $level == 1 {
+      box-shadow: 0 2px 5px var(--shadow-color);
+    } @else if $level == 2 {
+      box-shadow: 0 4px 10px var(--shadow-color);
+    } @else if $level == 3 {
+      box-shadow: 0 8px 20px var(--shadow-color);
+    }
+  }
+  

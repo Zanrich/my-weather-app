@@ -1,7 +1,59 @@
+@import 'variables';
+@import 'mixins';
+
+:root {
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --text-color: #{$text-color};
+  --background-color: #{$background-color};
+  --card-background: #{$card-background};
+  --border-color: #{$border-color};
+  --error-color: #{$error-color};
+  --success-color: #{$success-color};
+  --shadow-color: #{$shadow-color};
+  --transition-speed: #{$transition-speed};
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
+  @include transition(background-color, color);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: $border-radius-sm;
+  padding: $spacing-sm $spacing-md;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  @include transition(background-color);
+
+  &:hover {
+    background-color: var(--secondary-color);
+  }
+}
+
+input {
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-sm;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  @include transition(border-color, background-color, color);
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
 }
 
 .map-container {
