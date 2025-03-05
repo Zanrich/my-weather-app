@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import 'leaflet/dist/leaflet.css';
 import './styles/App.scss';
@@ -6,6 +6,7 @@ import Sidebar from './components/sidebar';
 import { getWeatherByCoordinates, WeatherData, getWeatherByCity } from './services/weatherService';
 import axios from 'axios';
 import SearchBar from './components/searchBar';
+import DarkModeToggle from './components/darkModeToggle';
 
 import {
   MapContainer,
@@ -30,7 +31,6 @@ const DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const App:React.FC = () => {
-  
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +39,15 @@ const App:React.FC = () => {
   >(null);
   const [mapCenter, setMapCenter] = useState<[number, number]>([-33.9221, 18.4231]); 
   const [mapZoom, setMapZoom] = useState<number>(5);
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
 
   const handleLocationSelect = async (lat: number, lng: number) => {
     setSelectedLocation([lat, lng]);
@@ -100,11 +109,12 @@ const App:React.FC = () => {
     return null;
   };
   return (
-    <div className={`app-container`}>
+    <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
     <div className="header">
         <h1>Weather Map</h1>
         <div className="header-controls">
           <SearchBar onSearch={handleCitySearch} />
+          <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
       </div>
       <div className="content-container">
@@ -115,7 +125,11 @@ const App:React.FC = () => {
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url={
+            darkMode
+              ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+              : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          }
         />
         <MapClickHandler />
         {selectedLocation && (
@@ -131,6 +145,7 @@ const App:React.FC = () => {
           weatherData={weatherData}
           loading={loading}
           error={error}
+          darkMode={darkMode}
         />
       </div>
 

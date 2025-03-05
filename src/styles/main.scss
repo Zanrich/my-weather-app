@@ -60,3 +60,11 @@ input {
   height: 100vh;
   width: 100%;
 }
+
+body.dark-mode {
+  --text-color: #{$dark-text-color};
+  --background-color: #{$dark-background-color};
+  --card-background: #{$dark-card-background};
+  --border-color: #{$dark-border-color};
+  --shadow-color: #{$dark-shadow-color};
+}

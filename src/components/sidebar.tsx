@@ -26,12 +26,13 @@ export interface SidebarProps {
     } | null;
 	loading: boolean;
 	error: string | null;
+    darkMode: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ weatherData, loading, error }) => {
+const Sidebar: React.FC<SidebarProps> = ({ weatherData, loading, error, darkMode }) => {
 	if(loading){
         return(
-            <div className={`weather-sidebar`}>
+            <div className={`weather-sidebar ${darkMode ? 'dark-mode' : ''}`}>
                 <div className="loading-spinner"></div>
                 <p>Loading weather data...</p>
             </div>
@@ -40,7 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({ weatherData, loading, error }) => {
 
     if(error){
         return (
-            <div className={`weather-sidebar`}>
+            <div className={`weather-sidebar ${darkMode ? 'dark-mode' : ''}`}>
               <div className="error-container">
                 <h3>Error</h3>
                 <p>{error}</p>
@@ -51,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ weatherData, loading, error }) => {
 
     if (!weatherData) {
         return (
-          <div className={`weather-sidebar`}>
+            <div className={`weather-sidebar ${darkMode ? 'dark-mode' : ''}`}>
             <div className="empty-state">
               <h3>Weather Information</h3>
               <p>Click on the map to see weather details for that location.</p>
@@ -66,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ weatherData, loading, error }) => {
     
     
     return (
-        <div className={`weather-sidebar`}>
+        <div className={`weather-sidebar ${darkMode ? 'dark-mode' : ''}`}>
           <div className="weather-header">
             <h2>
               {name}, {sys.country}
