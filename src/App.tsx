@@ -155,8 +155,15 @@ const App: React.FC = () => {
           {selectedLocation && (
             <Marker position={selectedLocation}>
               <Popup>
-                {weatherData?.name}
-                <br /> Easily customizable.
+                {weatherData ? (
+                  <div>
+                    <h3>{weatherData.name}</h3>
+                    <p>{weatherData.weather[0].description}</p>
+                    <p>{Math.round(weatherData.main.temp)}°C</p>
+                  </div>
+                ) : (
+                  <p>Loading weather data...</p>
+                )}
               </Popup>
             </Marker>
           )}
